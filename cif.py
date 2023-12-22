@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 
 def get_planes():
     transform = transforms.Compose([
+        transforms.Resize((128, 128)),
         transforms.ToTensor(),
     ])
 
