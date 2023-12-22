@@ -1,5 +1,7 @@
 import torch
 from denoising_diffusion_pytorch import Unet, GaussianDiffusion
+import cif
+import view
 
 model = Unet(
     dim = 64,
@@ -13,7 +15,7 @@ diffusion = GaussianDiffusion(
     timesteps = 1000    # number of steps
 )
 
-training_images = torch.rand(8, 3, 128, 128) # images are normalized from 0 to 1
+training_images = cif.get_planes()
 loss = diffusion(training_images)
 loss.backward()
 
@@ -24,3 +26,6 @@ print(sampled_images.shape) # (4, 3, 128, 128)
 sampled_images = sampled_images.cpu().detach()
 # Save the tensor to a file using torch.save
 torch.save(sampled_images, 'saved_tensor.pt')
+
+for sample in sampled_images:
+    view.view_it(sample)
